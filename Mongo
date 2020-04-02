@@ -1,0 +1,55 @@
+package sk.itsovy.petrova.mongo;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.DB;
+import org.bson.Document;
+
+public class Mongo {
+    public MongoClient getConnection() {
+        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        return  mongoClient;
+    }
+
+    public void insertOne() {
+        MongoDatabase mongoDatabase = getConnection().getDatabase("company");
+        MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("users");
+
+        Document user1 = new Document("name", "Petra Vargová").append("age", 20).append("status", "married");
+        mongoCollection.insertOne(user1);
+
+        Document user2 = new Document("name", "Filip Novák").append("age", 24).append("status", "divorced");
+        mongoCollection.insertOne(user2);
+    }
+        public void insertMany(){
+            try {
+                Document user3 = new Document("name", "Eva Nová").append("age", 25).append("status", "divorced");
+
+                Document user4 = new Document("name", "Igor Novák").append("age", 30).append("status", "married");
+
+
+                Document user5 = new Document("name", "Viktoria Nosáľová").append("age", 85).append("status", "widow");
+
+                Document user6 = new Document("name", "Michal Novotný").append("age", 48).append("status", "divorced");
+
+
+                collection.insertMany(asList(user3, user4, user5, user6));
+                log.info("Success");
+            } catch (MongoException | ClassCastException e) {
+                log.error("Exception occurred while insert **Multiple Document** : " + e, e);
+            }
+
+
+        getConnection().close();
+        System.out.println("success");
+    }
+
+    public void update(){
+
+    }
+
+    public void delete() {
+
+    }
+}
